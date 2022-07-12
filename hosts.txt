@@ -1,2 +1,2 @@
 
-prod ansible_host=54.93.206.250
+prod ansible_host=37.143.8.53

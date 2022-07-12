@@ -1,0 +1,24 @@
+---
+# tasks file for roles/install_ssl_for_jenkins
+- name: Copy a directory /data
+  copy:
+    src: data
+    dest: /
+
+- name: Generate an OpenSSL private key
+  openssl_privatekey:
+    path: /data/nginx/certs/henrydev.pp.ua.pem
+
+- name: Generate an OpenSSL CSR
+  openssl_csr:
+    path: /data/nginx/certs/henrydev.pp.ua.csr
+    privatekey_path: /data/nginx/certs/henrydev.pp.ua.pem
+    common_name: henrydev.pp.ua
+
+- name: Generate a Self Signed OpenSSL Certificate
+  openssl_certificate:
+    path: /data/nginx/certs/henrydev.pp.ua.crt
+    privatekey_path: /data/nginx/certs/henrydev.pp.ua.pem
+    csr_path: /data/nginx/certs/henrydev.pp.ua.csr
+    provider: selfsigned
+

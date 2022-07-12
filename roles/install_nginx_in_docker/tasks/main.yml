@@ -9,5 +9,17 @@
   docker_container:
     name: nginx
     image: nginx
-    ports: 80:80
+    state: started
+    detach: yes
+    exposed_ports: 
+      - "80"
+      - "443"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes: 
+      - /data/nginx/certs:/etc/nginx/certs
+      - /data/nginx/conf/:/etc/nginx/conf.d/:ro
+    links:
+      - "MyJenkins:henrydev.pp.ua"
 
