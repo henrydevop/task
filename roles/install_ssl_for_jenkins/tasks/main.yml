@@ -1,24 +1,27 @@
 ---
 # tasks file for roles/install_ssl_for_jenkins
-- name: Copy a directory /data
-  copy:
-    src: data
-    dest: /
+- name: Create volumes
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - "{{ nginx_certs_dir }}"
+    - "{{ nginx_conf_dir }}"
 
 - name: Generate an OpenSSL private key
   openssl_privatekey:
-    path: /data/nginx/certs/henrydev.pp.ua.pem
+    path: "{{ nginx_certs_dir }}/{{ domain }}.pem"
 
 - name: Generate an OpenSSL CSR
   openssl_csr:
-    path: /data/nginx/certs/henrydev.pp.ua.csr
-    privatekey_path: /data/nginx/certs/henrydev.pp.ua.pem
-    common_name: henrydev.pp.ua
+    path: "{{ nginx_certs_dir }}/{{ domain }}.csr"
+    privatekey_path: "{{ nginx_certs_dir }}/{{ domain }}.pem"
+    common_name: "{{ domain }}"
 
 - name: Generate a Self Signed OpenSSL Certificate
   openssl_certificate:
-    path: /data/nginx/certs/henrydev.pp.ua.crt
-    privatekey_path: /data/nginx/certs/henrydev.pp.ua.pem
-    csr_path: /data/nginx/certs/henrydev.pp.ua.csr
+    path: "{{ nginx_certs_dir }}/{{ domain }}.crt"
+    privatekey_path: "{{ nginx_certs_dir }}/{{ domain }}.pem"
+    csr_path: "{{ nginx_certs_dir }}/{{ domain }}.csr"
     provider: selfsigned
 

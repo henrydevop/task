@@ -1,2 +1,6 @@
 ---
 # handlers file for roles/install_nginx_in_docker
+- name: Restart nginx
+  service:
+    name: nginx
+    state: restarted

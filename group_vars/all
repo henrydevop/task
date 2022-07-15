@@ -1,3 +1,6 @@
 ---
-ansible_user: root
-ansible_ssh_private_key_file: ~/.ssh/id_rsa
+ansible_user: ubuntu
+ansible_ssh_private_key_file: ~/.ssh/aws_eu_key.pem
+nginx_certs_dir : /data/nginx/certs
+nginx_conf_dir : /data/nginx/conf 
+domain : henrydev.pp.ua

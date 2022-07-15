@@ -16,8 +16,9 @@
     - lsb-release
 
 - name: Add GPG Key
-  shell:
-    cmd: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
 
 - name: Add Docker repo
   apt_repository:

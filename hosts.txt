@@ -1,2 +1,2 @@
 
-prod ansible_host=37.143.8.53
+prod ansible_host=ec2-3-74-164-61.eu-central-1.compute.amazonaws.com

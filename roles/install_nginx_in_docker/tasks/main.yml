@@ -1,5 +1,10 @@
 ---
 # tasks file for roles/install_nginx_in_docker
+- name: Copy nginx conf from template
+  template:
+    src: jenkins.conf
+    dest: "{{ nginx_conf_dir}}/jenkins.conf"
+
 - name: Pull nginx image
   docker_image:
     name: nginx
@@ -10,7 +15,6 @@
     name: nginx
     image: nginx
     state: started
-    detach: yes
     exposed_ports: 
       - "80"
       - "443"
@@ -18,8 +22,9 @@
       - "80:80"
       - "443:443"
     volumes: 
-      - /data/nginx/certs:/etc/nginx/certs
-      - /data/nginx/conf/:/etc/nginx/conf.d/:ro
-    links:
-      - "MyJenkins:henrydev.pp.ua"
+      - "{{ nginx_certs_dir }}:/etc/nginx/certs"
+      - "{{ nginx_conf_dir }}:/etc/nginx/conf.d"
+#    links:
+#      - "jenkins:henrydev.pp.ua"
+ 
 

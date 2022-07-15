@@ -7,7 +7,7 @@
 
 - name: Run Jenkins in a Docker container
   docker_container:
-    name: MyJenkins
+    name: jenkins
     image: jenkins/jenkins
     state: started
     published_ports: 8080:8080
